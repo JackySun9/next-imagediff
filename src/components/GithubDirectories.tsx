@@ -64,7 +64,7 @@ const GithubDirectories: React.FC<GithubDirectoriesProps> = ({ repo, path }) => 
             <h2 className="card-title uppercase">{directory.name}</h2>
             <p>screenshots under three resolutions</p>
             <div className="card-actions">
-              <a className="btn btn-primary" href={`/imagediff?category=${directory.name}`}>Check</a>
+              <a className="btn btn-primary" href={`/imagediff/${directory.name}`}>Check</a>
             </div>
           </div>
         </div>

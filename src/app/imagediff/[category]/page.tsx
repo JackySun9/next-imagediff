@@ -1,4 +1,5 @@
-import ImageDiff from '../../components/ImageDiff';
+import React from 'react';
+import ImageDiff from '../../../components/ImageDiff';
 
 interface ScreenshotComparison {
   order: number;
@@ -20,9 +21,7 @@ async function getData(category: string) {
       return {};
     }
     const data = await res.json();
-  
     return data;
-    
   } catch (error) {
     return {};
   }
@@ -37,21 +36,30 @@ async function getTimestamp(category: string) {
   }
 }
 
-export default async function imagediff({
-  searchParams,
-}: {
-  searchParams?:{ [key: string]: string | undefined };
-}) {
-    console.log(searchParams);
-    if (searchParams === undefined) { 
-      searchParams = { category: 'milo' };
-    }
-    const data: Category = await getData(searchParams.category || 'milo');
-    const timestamp = await getTimestamp(searchParams.category || 'milo');
-
-    return (
-      <>
-        <ImageDiff data={ data } timestamp={ timestamp }/>
-      </>
-    );
+interface PageProps {
+  params: {
+    category: string;
+  };
 }
+
+export async function generateStaticParams() {
+  // Define your categories here or fetch from a source
+  const categories = ['milo', 'caas', 'feds', 'uar'];
+
+  return categories.map((category) => ({
+    category,
+  }));
+}
+
+const ImageDiffPage: React.FC<PageProps> = async ({ params }) => {
+  const data: Category = await getData(params.category);
+  const timestamp = await getTimestamp(params.category);
+
+  return (
+    <div>
+      <ImageDiff data={data} timestamp={timestamp} />
+    </div>
+  );
+};
+
+export default ImageDiffPage;
