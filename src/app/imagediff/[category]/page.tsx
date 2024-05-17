@@ -42,15 +42,6 @@ interface PageProps {
   };
 }
 
-export async function generateStaticParams() {
-  // Define your categories here or fetch from a source
-  const categories = ['milo', 'caas', 'feds', 'uar'];
-
-  return categories.map((category) => ({
-    category,
-  }));
-}
-
 const ImageDiffPage: React.FC<PageProps> = async ({ params }) => {
   const data: Category = await getData(params.category);
   const timestamp = await getTimestamp(params.category);
